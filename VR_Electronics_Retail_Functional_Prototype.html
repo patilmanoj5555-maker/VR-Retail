@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VR Electronics Retail — Functional Prototype</title>
+<style>
+:root{--r:#d71920;--rd:#b70f16;--dark:#171717;--bg:#f5f6f8;--line:#e4e6ea;--muted:#69707d;--green:#138a4d;--orange:#c26b00;--blue:#2867b2}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#171717}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#fff 0 53%,#d71920 53%);padding:20px}.loginbox{background:#fff;width:min(430px,100%);padding:35px;border-radius:22px;box-shadow:0 25px 70px #0003}.brand{font-size:25px;font-weight:900}.brand b{color:var(--r)}.brand small{display:block;color:#777;font-size:10px;letter-spacing:2px;margin-top:4px}.login h1{margin:28px 0 5px}.login p{color:#777}.field{margin:12px 0}.field label{display:block;font-size:12px;font-weight:bold;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px;background:#fff}.primary{background:var(--r);color:#fff;border:0;border-radius:9px;padding:11px 16px;font-weight:bold}.primary:hover{background:var(--rd)}.secondary{background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 14px}.demo{font-size:11px;color:#7f1d1d;background:#fff3f3;padding:10px;border-radius:8px;margin-top:13px}
+.hidden{display:none!important}.app{min-height:100vh}.side{position:fixed;width:250px;top:0;bottom:0;background:var(--dark);color:#fff;padding:18px 13px;overflow:auto;z-index:20}.side .brand{padding:7px 10px 20px;color:#fff}.side .brand b{color:#ff4249}.sub{font-size:10px;color:#888;text-transform:uppercase;font-weight:bold;letter-spacing:1px;padding:14px 10px 7px}.nav button{display:block;width:100%;border:0;background:none;color:#ddd;text-align:left;padding:10px 12px;border-radius:8px;margin:2px 0}.nav button:hover,.nav button.active{background:#303030;color:#fff}.nav button.active{border-left:3px solid #ff4147}.main{margin-left:250px}.top{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 25px;position:sticky;top:0;z-index:10}.search{width:430px}.search input{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:9px}.profile{display:flex;align-items:center;gap:10px;font-size:13px}.avatar{width:36px;height:36px;border-radius:50%;background:var(--r);color:#fff;display:grid;place-items:center;font-weight:bold}.content{padding:24px}.section{display:none}.section.active{display:block}.title{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.title h1{margin:0;font-size:25px}.title p{margin:5px 0 0;color:var(--muted);font-size:13px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card,.panel{background:#fff;border:1px solid var(--line);border-radius:14px}.card{padding:17px}.metric{font-size:24px;font-weight:900;margin:7px 0}.muted{font-size:12px;color:var(--muted)}.up{font-size:11px;color:var(--green);font-weight:bold}.danger{color:var(--r);font-weight:bold}.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:16px}.panel{overflow:hidden}.head{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.head h3{font-size:15px;margin:0}.body{padding:17px}.alert{padding:10px;border-radius:8px;background:#fff7ed;margin:8px 0;font-size:12px}.alert.red{background:#fff0f1}.alert.green{background:#effaf4}table{border-collapse:collapse;width:100%;font-size:12px}th,td{text-align:left;padding:11px;border-bottom:1px solid #eee}th{background:#fafafa;color:#69707d;text-transform:uppercase;font-size:10px}tr:last-child td{border-bottom:0}.badge{display:inline-block;border-radius:20px;padding:4px 7px;font-size:9px;font-weight:800}.bg{background:#eaf8f0;color:#126e40}.br{background:#fff0f1;color:#ad1119}.by{background:#fff6df;color:#965900}.bb{background:#edf4ff;color:#255f9f}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}.toolbar input,.toolbar select{padding:10px;border:1px solid var(--line);border-radius:8px}.formgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.full{grid-column:1/-1}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:17px}.empty{text-align:center;color:#888;padding:35px}.drawer{position:fixed;right:0;top:0;bottom:0;width:min(600px,100%);background:#fff;box-shadow:-15px 0 45px #0002;z-index:50;padding:22px;overflow:auto}.drawer h2{margin-top:0}.overlay{position:fixed;inset:0;background:#0006;z-index:40}.close{float:right;border:0;background:#eee;border-radius:50%;width:32px;height:32px}.lineitems{width:100%;margin-top:8px}.lineitems td,.lineitems th{padding:8px}.mobile{display:none}.totalbox{background:#fafafa;border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:12px}.totalrow{display:flex;justify-content:space-between;margin:6px 0}.totalrow.grand{font-size:18px;font-weight:900;border-top:1px solid var(--line);padding-top:9px}.toast{position:fixed;right:20px;bottom:20px;background:#171717;color:#fff;padding:13px 17px;border-radius:9px;z-index:100;box-shadow:0 8px 25px #0003}
+@media(max-width:950px){.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.formgrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.side{transform:translateX(-100%);transition:.2s}.side.open{transform:translateX(0)}.main{margin-left:0}.mobile{display:block;border:0;background:#fff;font-size:22px}.search{display:none}.top{padding:0 13px}.content{padding:14px}.cards{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.title{align-items:flex-start;flex-direction:column}.drawer{width:100%}}
+</style>
+</head>
+<body>
+
+<div id="login" class="login">
+  <div class="loginbox">
+    <div class="brand"><b>VR</b> ELECTRONICS <small>RETAIL MANAGEMENT SYSTEM</small></div>
+    <h1>Welcome back</h1><p>Sign in to your store portal.</p>
+    <div class="field"><label>Login ID</label><input id="lid" value="admin"></div>
+    <div class="field"><label>Password</label><input id="lpw" type="password" value="VR@12345"></div>
+    <button class="primary" style="width:100%;margin-top:8px" onclick="login()">Sign In</button>
+    <div class="demo"><b>Demo:</b> admin / VR@12345<br>Prototype only — production authentication must use a secure backend.</div>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+<aside id="side" class="side">
+  <div class="brand"><b>VR</b> ELECTRONICS <small>RETAIL MANAGEMENT</small></div>
+  <div class="sub">Overview</div>
+  <div class="nav">
+    <button class="active" data-s="dashboard">▣ Dashboard</button>
+    <button data-s="products">▦ Products</button><button data-s="inventory">▤ Inventory</button>
+    <button data-s="sales">▰ Sales & Invoices</button><button data-s="orders">◫ Orders</button>
+    <button data-s="purchases">▱ Purchases</button><button data-s="customers">♙ Customers</button>
+    <button data-s="suppliers">♧ Suppliers</button><button data-s="payments">₹ Payments</button>
+    <button data-s="expenses">◈ Expenses</button><button data-s="delivery">▸ Delivery</button>
+    <button data-s="warranty">⚙ Warranty</button>
+  </div>
+  <div class="sub">Control</div>
+  <div class="nav"><button data-s="reports">▥ Reports</button><button data-s="users">♟ Users & Security</button><button data-s="settings">⚙ Settings</button></div>
+</aside>
+
+<main class="main">
+<header class="top"><div style="display:flex;gap:12px;align-items:center"><button class="mobile" onclick="side.classList.toggle('open')">☰</button><div class="search"><input placeholder="Search product, invoice, customer..." oninput="globalSearch(this.value)"></div></div><div class="profile"><div><b>Owner / Admin</b><div class="muted">VR Electronics Retail</div></div><div class="avatar">VR</div><button class="secondary" onclick="logout()">Logout</button></div></header>
+<div class="content">
+
+<section id="dashboard" class="section active">
+<div class="title"><div><h1>Dashboard</h1><p id="todayText"></p></div><button class="primary" onclick="openSale()">＋ New Sale</button></div>
+<div class="cards">
+<div class="card"><div class="muted">Today's Sales</div><div class="metric" id="mSales">₹0</div><div class="up">Live from sales records</div></div>
+<div class="card"><div class="muted">Today's Purchases</div><div class="metric" id="mPurch">₹0</div><div class="muted">Recorded purchases</div></div>
+<div class="card"><div class="muted">Customer Outstanding</div><div class="metric" id="mRecv">₹0</div><div class="danger">Receivables</div></div>
+<div class="card"><div class="muted">Stock Value</div><div class="metric" id="mStock">₹0</div><div class="up" id="mSku">0 active SKUs</div></div>
+</div>
+<div class="grid2">
+<div class="panel"><div class="head"><h3>Quick Actions</h3></div><div class="body" style="display:grid;grid-template-columns:repeat(2,1fr);gap:9px"><button class="secondary" onclick="openSale()">🧾 New Sale</button><button class="secondary" onclick="openPayment()">💰 Receive Payment</button><button class="secondary" onclick="openPurchase()">📦 Add Purchase</button><button class="secondary" onclick="openProduct()">➕ Add Product</button><button class="secondary" onclick="openCustomer()">👤 Add Customer</button><button class="secondary" onclick="openExpense()">💸 Add Expense</button></div></div>
+<div class="panel"><div class="head"><h3>Attention Required</h3></div><div class="body"><div class="alert red"><b id="overdue">0</b> customer balances outstanding</div><div class="alert"><b id="lowstock">0</b> products at/below reorder level</div><div class="alert green"><b>Daily Backup</b> — production setup required</div></div></div>
+</div>
+<div class="panel" style="margin-top:16px"><div class="head"><h3>Recent Sales</h3><button class="secondary" onclick="show('sales')">View all</button></div><div style="overflow:auto"><table><thead><tr><th>Invoice</th><th>Customer</th><th>Product</th><th>Total</th><th>Paid</th><th>Balance</th></tr></thead><tbody id="recentSales"></tbody></table></div></div>
+</section>
+
+<section id="products" class="section"><div class="title"><div><h1>Products</h1><p>Add, edit and manage your catalogue.</p></div><button class="primary" onclick="openProduct()">＋ Add Product</button></div><div class="toolbar"><input id="prodSearch" placeholder="Search product/SKU..." oninput="renderProducts()"><select id="prodCat" onchange="renderProducts()"><option value="">All Categories</option></select></div><div class="panel"><div style="overflow:auto"><table><thead><tr><th>SKU</th><th>Product</th><th>Brand</th><th>Category</th><th>Sale Price</th><th>Stock</th><th>Website</th><th></th></tr></thead><tbody id="productsBody"></tbody></table></div></div></section>
+
+<section id="inventory" class="section"><div class="title"><div><h1>Inventory</h1><p>Stock automatically changes after purchases and sales.</p></div><button class="primary" onclick="openAdjustment()">＋ Stock Adjustment</button></div><div class="cards"><div class="card"><div class="muted">Total Units</div><div class="metric" id="invUnits">0</div></div><div class="card"><div class="muted">Low Stock</div><div class="metric danger" id="invLow">0</div></div><div class="card"><div class="muted">Out of Stock</div><div class="metric" id="invOut">0</div></div><div class="card"><div class="muted">Stock Value</div><div class="metric" id="invValue">₹0</div></div></div><div class="panel" style="margin-top:16px"><div class="head"><h3>Stock</h3></div><div style="overflow:auto"><table><thead><tr><th>Product</th><th>SKU</th><th>Stock</th><th>Reorder</th><th>Status</th><th></th></tr></thead><tbody id="inventoryBody"></tbody></table></div></div></section>
+
+<section id="sales" class="section"><div class="title"><div><h1>Sales & Invoices</h1><p>Create invoices and automatically reduce stock.</p></div><button class="primary" onclick="openSale()">＋ New Sale</button></div><div class="panel"><div style="overflow:auto"><table><thead><tr><th>Invoice</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th></tr></thead><tbody id="salesBody"></tbody></table></div></div></section>
+
+<section id="orders" class="section"><div class="title"><div><h1>Orders</h1><p>Website enquiries can be converted to orders.</p></div><button class="primary" onclick="toast('Order form can be connected next.')">＋ New Order</button></div><div class="panel"><div class="empty">No orders created in this demo yet.<br><br><button class="primary" onclick="openSale()">Create a sale/invoice</button></div></div></section>
+
+<section id="purchases" class="section"><div class="title"><div><h1>Purchases</h1><p>Supplier purchases automatically increase stock.</p></div><button class="primary" onclick="openPurchase()">＋ New Purchase</button></div><div class="panel"><div style="overflow:auto"><table><thead><tr><th>Purchase</th><th>Supplier</th><th>Date</th><th>Product</th><th>Qty</th><th>Total</th><th>Paid</th><th>Payable</th></tr></thead><tbody id="purchasesBody"></tbody></table></div></div></section>
+
+<section id="customers" class="section"><div class="title"><div><h1>Customers</h1><p>Retail, B2B and approved credit customers.</p></div><button class="primary" onclick="openCustomer()">＋ Add Customer</button></div><div class="panel"><div style="overflow:auto"><table><thead><tr><th>Name</th><th>Type</th><th>Mobile</th><th>Total Purchases</th><th>Outstanding</th><th></th></tr></thead><tbody id="customersBody"></tbody></table></div></div></section>
+
+<section id="suppliers" class="section"><div class="title"><div><h1>Suppliers</h1><p>Supplier purchases and payables.</p></div><button class="primary" onclick="openSupplier()">＋ Add Supplier</button></div><div class="panel"><div style="overflow:auto"><table><thead><tr><th>Supplier</th><th>Mobile</th><th>Purchases</th><th>Payable</th></tr></thead><tbody id="suppliersBody"></tbody></table></div></div></section>
+
+<section id="payments" class="section"><div class="title"><div><h1>Payments</h1><p>Customer receipts and supplier payments.</p></div><button class="primary" onclick="openPayment()">＋ Record Payment</button></div><div class="cards"><div class="card"><div class="muted">Customer Collections</div><div class="metric" id="payRecv">₹0</div></div><div class="card"><div class="muted">Supplier Payments</div><div class="metric" id="paySupp">₹0</div></div><div class="card"><div class="muted">Expenses</div><div class="metric" id="payExp">₹0</div></div><div class="card"><div class="muted">Transactions</div><div class="metric" id="payCount">0</div></div></div><div class="panel" style="margin-top:16px"><div class="head"><h3>Payment Ledger</h3></div><div style="overflow:auto"><table><thead><tr><th>Date</th><th>Type</th><th>Party</th><th>Mode</th><th>Reference</th><th>Amount</th></tr></thead><tbody id="paymentsBody"></tbody></table></div></div></section>
+
+<section id="expenses" class="section"><div class="title"><div><h1>Expenses</h1><p>Track shop rent, electricity, salary, petty cash and more.</p></div><button class="primary" onclick="openExpense()">＋ Add Expense</button></div><div class="panel"><div style="overflow:auto"><table><thead><tr><th>Date</th><th>Category</th><th>Description</th><th>Mode</th><th>Amount</th></tr></thead><tbody id="expensesBody"></tbody></table></div></div></section>
+
+<section id="delivery" class="section"><div class="title"><div><h1>Delivery</h1><p>Track delivery and brand installation.</p></div></div><div class="panel"><div class="empty">Delivery records will appear here after orders/invoices are created.</div></div></section>
+<section id="warranty" class="section"><div class="title"><div><h1>Warranty</h1><p>Track registration assistance and service references.</p></div></div><div class="panel"><div class="empty">Warranty records will appear here after serialised products are sold.</div></div></section>
+<section id="reports" class="section"><div class="title"><div><h1>Reports</h1><p>Live summary from this browser session.</p></div><button class="primary" onclick="window.print()">Print / Save PDF</button></div><div class="cards"><div class="card"><div class="muted">Sales</div><div class="metric" id="repSales">₹0</div></div><div class="card"><div class="muted">Purchases</div><div class="metric" id="repPurch">₹0</div></div><div class="card"><div class="muted">Expenses</div><div class="metric" id="repExp">₹0</div></div><div class="card"><div class="muted">Gross Sales Margin*</div><div class="metric" id="repMargin">₹0</div><div class="muted">Prototype calculation</div></div></div></section>
+<section id="users" class="section"><div class="title"><div><h1>Users & Security</h1><p>Production version will enforce server-side permissions and 2FA.</p></div><button class="primary" onclick="toast('User creation is reserved for the secure backend.')">＋ Add Staff</button></div><div class="panel"><div class="body"><b>Admin</b> — Owner — 2FA Required<br><br><b>Staff</b> — Cashier / Sales / Loader — Restricted access</div></div></section>
+<section id="settings" class="section"><div class="title"><div><h1>Settings</h1><p>VR Electronics Retail configuration.</p></div></div><div class="panel"><div class="body"><div class="formgrid"><div class="field"><label>Company</label><input value="VR Electronics Retail"></div><div class="field"><label>GSTIN</label><input value="27ABCDE1234F1Z5"></div><div class="field"><label>Phone / WhatsApp</label><input value="+91 98765 43210"></div><div class="field full"><label>Address</label><input value="Shop No. 5 & 6, Vraj Plaza, L.T. Road, Borivali West, Mumbai, Maharashtra 400092"></div><div class="field"><label>Hours</label><input value="10:00 AM – 9:30 PM"></div><div class="field"><label>Closed</label><input value="Monday"></div><div class="field"><label>Free Delivery Radius</label><input value="5 km"></div></div></div></div></section>
+</div></main></div>
+
+<div id="overlay" class="overlay hidden" onclick="closeDrawer()"></div>
+<div id="drawer" class="drawer hidden"></div>
+<div id="toast" class="toast hidden"></div>
+
+<script>
+const KEY='vr_retail_demo_v2';
+const seed={
+ products:[
+  {id:1,sku:'TV-SAM-55-01',name:'55" 4K Smart TV',brand:'Samsung',cat:'Televisions',price:68990,cost:54000,stock:14,reorder:3,web:1},
+  {id:2,sku:'RF-LG-655-02',name:'655L Refrigerator',brand:'LG',cat:'Refrigerators',price:98990,cost:80000,stock:4,reorder:3,web:1},
+  {id:3,sku:'AC-DAI-15-03',name:'1.5T Inverter AC',brand:'Daikin',cat:'Air Conditioners',price:52400,cost:42000,stock:0,reorder:2,web:1},
+  {id:4,sku:'MB-APL-16-04',name:'iPhone 16 128GB',brand:'Apple',cat:'Mobile Phones',price:69900,cost:61000,stock:7,reorder:2,web:1},
+  {id:5,sku:'WM-LG-09-05',name:'9kg Front Load Washing Machine',brand:'LG',cat:'Washing Machines',price:42990,cost:35000,stock:2,reorder:5,web:1}
+ ],
+ customers:[{id:1,name:'Walk-in Customer',type:'B2C',mobile:'',gstin:''},{id:2,name:'ABC Builders Pvt Ltd',type:'B2B / Builder',mobile:'9876500000',gstin:'27XXXXXXX1Z5'}],
+ suppliers:[{id:1,name:'LG Electronics',mobile:'9876500011'},{id:2,name:'Samsung India',mobile:'9876500022'}],
+ sales:[],purchases:[],payments:[],expenses:[],stockMoves:[]
+};
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||seed;
+function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll()}
+function money(n){return '₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2})}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function today(){return new Date().toLocaleDateString('en-IN')}
+function nextNo(prefix,list){return prefix+'-'+new Date().getFullYear()+'-'+String(list.length+1).padStart(5,'0')}
+function login(){if(lid.value==='admin'&&lpw.value==='VR@12345'){document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden');renderAll()}else alert('Demo login: admin / VR@12345')}
+function logout(){app.classList.add('hidden');login.classList.remove('hidden')}
+function show(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.s===id));side.classList.remove('open');window.scrollTo(0,0);renderAll()}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.s));
+function closeDrawer(){drawer.classList.add('hidden');overlay.classList.add('hidden')}
+function openDrawer(title,body,submit){drawer.innerHTML=`<button class="close" onclick="closeDrawer()">×</button><h2>${title}</h2>${body}<div class="actions"><button class="secondary" onclick="closeDrawer()">Cancel</button><button class="primary" id="drawerSave">${submit||'Save'}</button></div>`;drawer.classList.remove('hidden');overlay.classList.remove('hidden')}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2200)}
+
+function openProduct(){
+ openDrawer('Add Product',`<div class="formgrid">
+ <div class="field"><label>Product Name *</label><input id="fName"></div><div class="field"><label>Brand *</label><input id="fBrand"></div><div class="field"><label>Category *</label><input id="fCat"></div>
+ <div class="field"><label>SKU *</label><input id="fSku"></div><div class="field"><label>MRP</label><input id="fMrp" type="number"></div><div class="field"><label>Selling Price *</label><input id="fPrice" type="number"></div>
+ <div class="field"><label>Purchase Price (Admin)</label><input id="fCost" type="number"></div><div class="field"><label>Opening Stock</label><input id="fStock" type="number" value="0"></div><div class="field"><label>Reorder Level</label><input id="fReorder" type="number" value="2"></div>
+ <div class="field"><label>HSN</label><input id="fHsn"></div><div class="field"><label>GST %</label><input id="fGst" type="number" value="18"></div><div class="field"><label>Show on Website</label><select id="fWeb"><option value="1">Yes</option><option value="0">No</option></select></div>
+ </div>`,'Save Product');
+ document.getElementById('drawerSave').onclick=()=>{
+  if(!fName.value||!fBrand.value||!fCat.value||!fSku.value||!fPrice.value)return alert('Please fill required fields.');
+  if(db.products.some(p=>p.sku.toLowerCase()===fSku.value.toLowerCase()))return alert('SKU already exists.');
+  db.products.push({id:Date.now(),sku:fSku.value,name:fName.value,brand:fBrand.value,cat:fCat.value,price:+fPrice.value,cost:+fCost.value||0,stock:+fStock.value||0,reorder:+fReorder.value||0,web:+fWeb.value});db.stockMoves.push({date:today(),type:'Opening Stock',product:fName.value,qty:+fStock.value||0});save();closeDrawer();toast('Product added successfully');show('products')
+ }
+}
+function openCustomer(){
+ openDrawer('Add Customer',`<div class="formgrid"><div class="field"><label>Name *</label><input id="cName"></div><div class="field"><label>Type</label><select id="cType"><option>B2C</option><option>B2B</option><option>B2B / Builder</option></select></div><div class="field"><label>Mobile</label><input id="cMob"></div><div class="field"><label>GSTIN</label><input id="cGst"></div><div class="field"><label>Credit Enabled</label><select id="cCredit"><option value="0">No</option><option value="1">Yes — Admin Approved</option></select></div><div class="field"><label>Credit Limit</label><input id="cLimit" type="number" value="0"></div><div class="field full"><label>Address</label><textarea id="cAddr"></textarea></div></div>`,'Save Customer');
+ drawerSave.onclick=()=>{if(!cName.value)return alert('Customer name required');db.customers.push({id:Date.now(),name:cName.value,type:cType.value,mobile:cMob.value,gstin:cGst.value,credit:+cCredit.value,limit:+cLimit.value});save();closeDrawer();toast('Customer added');show('customers')}
+}
+function openSupplier(){
+ openDrawer('Add Supplier',`<div class="formgrid"><div class="field"><label>Supplier Name *</label><input id="sName"></div><div class="field"><label>Mobile</label><input id="sMob"></div><div class="field"><label>GSTIN</label><input id="sGst"></div><div class="field"><label>Credit Terms</label><input id="sTerms" placeholder="e.g. 30 days"></div></div>`,'Save Supplier');
+ drawerSave.onclick=()=>{if(!sName.value)return alert('Supplier name required');db.suppliers.push({id:Date.now(),name:sName.value,mobile:sMob.value,gstin:sGst.value});save();closeDrawer();toast('Supplier added');show('suppliers')}
+}
+function openSale(){
+ let opts=db.customers.map(c=>`<option value="${c.id}">${esc(c.name)}${c.mobile?' — '+esc(c.mobile):''}</option>`).join('');
+ openDrawer('New Sale / GST Invoice',`<div class="field"><label>Customer</label><select id="saleCust">${opts}</select></div>
+ <div class="panel"><div class="head"><h3>Invoice Items</h3><button type="button" class="secondary" onclick="addSaleRow()">＋ Add Product</button></div><div class="body"><table class="lineitems"><thead><tr><th>Product</th><th>Qty</th><th>Rate</th><th>Amount</th><th></th></tr></thead><tbody id="saleRows"></tbody></table><div class="totalbox"><div class="totalrow"><span>Subtotal</span><b id="saleSub">₹0</b></div><div class="totalrow"><span>GST (18% demo)</span><b id="saleGst">₹0</b></div><div class="totalrow grand"><span>Grand Total</span><b id="saleTotal">₹0</b></div></div></div></div>
+ <div class="formgrid"><div class="field"><label>Amount Received</label><input id="salePaid" type="number" value="0" oninput="calcSale()"></div><div class="field"><label>Payment Mode</label><select id="saleMode"><option>Cash</option><option>UPI</option><option>Card</option><option>Bank Transfer</option><option>Cheque</option><option>EMI</option><option>Credit</option></select></div><div class="field"><label>Delivery</label><select id="saleDelivery"><option>Not Required</option><option>Schedule Delivery</option></select></div></div><div class="muted" id="saleBalance">Balance: ₹0</div>`,'Save & Generate Invoice');
+ drawerSave.onclick=saveSale;addSaleRow();
+}
+function addSaleRow(){
+ const tb=document.getElementById('saleRows');if(!tb)return;
+ const id=Date.now()+Math.random();let opts=db.products.map(p=>`<option value="${p.id}">${esc(p.name)} — ${esc(p.sku)} (Stock ${p.stock})</option>`).join('');
+ const tr=document.createElement('tr');tr.dataset.id=id;tr.innerHTML=`<td><select style="width:100%" onchange="rowChange(this)"><option value="">Select</option>${opts}</select></td><td><input type="number" min="1" value="1" style="width:65px" oninput="calcSale()"></td><td class="rate">₹0</td><td class="amt">₹0</td><td><button type="button" onclick="this.closest('tr').remove();calcSale()" style="border:0;background:none;color:#d71920">×</button></td>`;tb.appendChild(tr)
+}
+function rowChange(sel){const tr=sel.closest('tr'),p=db.products.find(x=>x.id==sel.value);tr.querySelector('.rate').textContent=money(p?p.price:0);calcSale()}
+function calcSale(){
+ let sub=0;document.querySelectorAll('#saleRows tr').forEach(tr=>{let sel=tr.querySelector('select'),p=db.products.find(x=>x.id==sel.value),q=+tr.querySelector('input').value||0,amt=(p?p.price:0)*q;tr.querySelector('.amt').textContent=money(amt);sub+=amt});let gst=sub*.18,total=sub+gst;document.getElementById('saleSub').textContent=money(sub);document.getElementById('saleGst').textContent=money(gst);document.getElementById('saleTotal').textContent=money(total);document.getElementById('saleBalance').textContent='Balance: '+money(Math.max(0,total-(+document.getElementById('salePaid').value||0)))}
+function saveSale(){
+ let items=[],valid=true;document.querySelectorAll('#saleRows tr').forEach(tr=>{let p=db.products.find(x=>x.id==tr.querySelector('select').value),q=+tr.querySelector('input').value||0;if(!p||q<1){valid=false;return}if(q>p.stock){alert(`${p.name}: only ${p.stock} in stock.`);valid=false;return}items.push({productId:p.id,name:p.name,qty:q,rate:p.price,amount:q*p.price})});
+ if(!valid||!items.length)return;
+ let sub=items.reduce((a,x)=>a+x.amount,0),gst=sub*.18,total=sub+gst,paid=+salePaid.value||0;if(paid>total)return alert('Payment cannot exceed invoice total.');
+ let c=db.customers.find(x=>x.id==saleCust.value)||db.customers[0];if(saleMode.value==='Credit'&&(!c.credit||c.limit<=0))return alert('Credit is not approved for this customer.');
+ let inv=nextNo('VRE',db.sales);db.sales.unshift({id:Date.now(),invoice:inv,date:today(),customerId:c.id,customer:c.name,items,subtotal:sub,gst,total,paid,balance:total-paid,mode:saleMode.value,status:paid>=total?'PAID':'PENDING'});
+ items.forEach(i=>{let p=db.products.find(x=>x.id===i.productId);p.stock-=i.qty;db.stockMoves.push({date:today(),type:'Sale',invoice:inv,product:p.name,qty:-i.qty})});
+ db.payments.unshift({id:Date.now(),date:today(),type:'Customer Receipt',party:c.name,mode:saleMode.value,ref:inv,amount:paid});
+ save();closeDrawer();toast(`Invoice ${inv} created`);show('sales')
+}
+function openPayment(){
+ let opts=db.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
+ openDrawer('Record Customer Payment',`<div class="formgrid"><div class="field full"><label>Customer</label><select id="pc">${opts}</select></div><div class="field"><label>Amount *</label><input id="pa" type="number"></div><div class="field"><label>Mode</label><select id="pm"><option>Cash</option><option>UPI</option><option>Card</option><option>Bank Transfer</option><option>Cheque</option></select></div><div class="field"><label>Reference</label><input id="pref" placeholder="Transaction number"></div><div class="field full"><label>Notes</label><textarea id="pnote"></textarea></div></div>`,'Save Payment');
+ drawerSave.onclick=()=>{let c=db.customers.find(x=>x.id==pc.value);if(!c||!(+pa.value>0))return alert('Enter valid payment.');db.payments.unshift({id:Date.now(),date:today(),type:'Customer Receipt',party:c.name,mode:pm.value,ref:pref.value,amount:+pa.value});let unpaid=db.sales.filter(s=>s.customerId===c.id&&s.balance>0);let left=+pa.value;unpaid.forEach(s=>{let x=Math.min(left,s.balance);s.paid+=x;s.balance-=x;s.status=s.balance<=0?'PAID':'PENDING';left-=x});save();closeDrawer();toast('Payment recorded');show('payments')}
+}
+function openPurchase(){
+ let popts=db.products.map(p=>`<option value="${p.id}">${esc(p.name)} — ${esc(p.sku)}</option>`).join(''),sopts=db.suppliers.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+ openDrawer('New Purchase',`<div class="formgrid"><div class="field"><label>Supplier</label><select id="ps">${sopts}</select></div><div class="field"><label>Product</label><select id="pp">${popts}</select></div><div class="field"><label>Quantity</label><input id="pq" type="number" value="1"></div><div class="field"><label>Purchase Rate</label><input id="pr" type="number" value="0"></div><div class="field"><label>Paid Now</label><input id="ppaid" type="number" value="0"></div><div class="field"><label>Payment Mode</label><select id="pmo"><option>Bank Transfer</option><option>UPI</option><option>Cash</option><option>Cheque</option></select></div><div class="field full"><label>Supplier Invoice No.</label><input id="pinv"></div></div>`,'Save Purchase');
+ drawerSave.onclick=()=>{let p=db.products.find(x=>x.id==pp.value),s=db.suppliers.find(x=>x.id==ps.value),q=+pq.value||0,rate=+pr.value||0,paid=+ppaid.value||0;if(!p||!s||q<1||rate<=0)return alert('Fill product, quantity and purchase rate.');let total=q*rate;if(paid>total)return alert('Payment exceeds purchase total.');let no=pinv.value||nextNo('PI',db.purchases);p.cost=rate;p.stock+=q;db.purchases.unshift({id:Date.now(),no,supplier:s.name,date:today(),product:p.name,qty:q,total,paid,balance:total-paid});db.payments.unshift({id:Date.now(),date:today(),type:'Supplier Payment',party:s.name,mode:pmo.value,ref:no,amount:paid});db.stockMoves.push({date:today(),type:'Purchase',invoice:no,product:p.name,qty:q});save();closeDrawer();toast('Purchase saved; stock increased');show('purchases')}
+}
+function openExpense(){
+ openDrawer('Add Expense',`<div class="formgrid"><div class="field"><label>Category</label><select id="ec"><option>Rent</option><option>Electricity</option><option>Salary</option><option>Petty Cash</option><option>Transport</option><option>Advertising</option><option>Repairs</option><option>Other</option></select></div><div class="field"><label>Amount *</label><input id="ea" type="number"></div><div class="field"><label>Payment Mode</label><select id="em"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Card</option></select></div><div class="field full"><label>Description</label><textarea id="ed"></textarea></div></div>`,'Save Expense');
+ drawerSave.onclick=()=>{if(!(+ea.value>0))return alert('Enter expense amount.');db.expenses.unshift({id:Date.now(),date:today(),cat:ec.value,desc:ed.value,mode:em.value,amount:+ea.value});db.payments.unshift({id:Date.now(),date:today(),type:'Expense',party:ec.value,mode:em.value,ref:'EXP',amount:+ea.value});save();closeDrawer();toast('Expense recorded');show('expenses')}
+}
+function openAdjustment(){
+ let opts=db.products.map(p=>`<option value="${p.id}">${esc(p.name)} — Stock ${p.stock}</option>`).join('');
+ openDrawer('Stock Adjustment',`<div class="field"><label>Product</label><select id="ap">${opts}</select></div><div class="formgrid"><div class="field"><label>Actual Stock</label><input id="ast" type="number"></div><div class="field"><label>Reason</label><select id="ar"><option>Physical Count Correction</option><option>Damaged</option><option>Lost / Missing</option><option>Other</option></select></div><div class="field"><label>Notes</label><input id="an"></div></div>`,'Apply Adjustment');
+ drawerSave.onclick=()=>{let p=db.products.find(x=>x.id==ap.value),actual=+ast.value;if(!p||actual<0)return alert('Invalid stock.');let diff=actual-p.stock;p.stock=actual;db.stockMoves.push({date:today(),type:'Adjustment',product:p.name,qty:diff,reason:ar.value});save();closeDrawer();toast('Stock adjusted');show('inventory')}
+}
+function renderProducts(){let q=(document.getElementById('prodSearch')?.value||'').toLowerCase(),cat=document.getElementById('prodCat')?.value||'';productsBody.innerHTML=db.products.filter(p=>(!q||(`${p.name} ${p.sku} ${p.brand}`.toLowerCase().includes(q)))&&(!cat||p.cat===cat)).map(p=>`<tr><td>${esc(p.sku)}</td><td><b>${esc(p.name)}</b></td><td>${esc(p.brand)}</td><td>${esc(p.cat)}</td><td>${money(p.price)}</td><td>${p.stock}</td><td><span class="badge ${p.web?'bg':'by'}">${p.web?'VISIBLE':'HIDDEN'}</span></td><td><button class="secondary" onclick="alert('Edit form can be added with the same product fields.')">Edit</button></td></tr>`).join('')||`<tr><td colspan="8" class="empty">No products found</td></tr>`}
+function renderAll(){
+ todayText.textContent=new Date().toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})+' · Store overview';
+ let sales=db.sales.reduce((a,x)=>a+x.total,0),purch=db.purchases.reduce((a,x)=>a+x.total,0),exp=db.expenses.reduce((a,x)=>a+x.amount,0),recv=db.sales.reduce((a,x)=>a+x.balance,0),stock=db.products.reduce((a,p)=>a+p.stock,0),stockVal=db.products.reduce((a,p)=>a+p.stock*p.cost,0);
+ mSales.textContent=money(sales);mPurch.textContent=money(purch);mRecv.textContent=money(recv);mStock.textContent=money(stockVal);mSku.textContent=db.products.length+' active SKUs';overdue.textContent=db.sales.filter(x=>x.balance>0).length;lowstock.textContent=db.products.filter(p=>p.stock<=p.reorder).length;
+ invUnits.textContent=stock;invLow.textContent=db.products.filter(p=>p.stock>0&&p.stock<=p.reorder).length;invOut.textContent=db.products.filter(p=>p.stock===0).length;invValue.textContent=money(stockVal);
+ payRecv.textContent=money(db.payments.filter(x=>x.type==='Customer Receipt').reduce((a,x)=>a+x.amount,0));paySupp.textContent=money(db.payments.filter(x=>x.type==='Supplier Payment').reduce((a,x)=>a+x.amount,0));payExp.textContent=money(exp);payCount.textContent=db.payments.length;
+ repSales.textContent=money(sales);repPurch.textContent=money(purch);repExp.textContent=money(exp);repMargin.textContent=money(db.sales.reduce((a,s)=>a+s.items.reduce((z,i)=>{let p=db.products.find(x=>x.id===i.productId);return z+i.qty*(i.rate-(p?.cost||0))},0),0));
+ renderProducts();
+ productsBody.querySelectorAll('button').forEach(()=>{});
+ inventoryBody.innerHTML=db.products.map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(p.sku)}</td><td>${p.stock}</td><td>${p.reorder}</td><td><span class="badge ${p.stock===0?'br':p.stock<=p.reorder?'by':'bg'}">${p.stock===0?'OUT OF STOCK':p.stock<=p.reorder?'REORDER':'OK'}</span></td><td><button class="secondary" onclick="openAdjustmentFor(${p.id})">Adjust</button></td></tr>`).join('');
+ salesBody.innerHTML=db.sales.map(s=>`<tr><td><b>${s.invoice}</b></td><td>${s.date}</td><td>${esc(s.customer)}</td><td>${s.items.map(i=>esc(i.name)+' × '+i.qty).join('<br>')}</td><td>${money(s.total)}</td><td>${money(s.paid)}</td><td>${money(s.balance)}</td><td><span class="badge ${s.balance?'by':'bg'}">${s.status}</span></td></tr>`).join('')||`<tr><td colspan="8" class="empty">No sales yet. Click New Sale.</td></tr>`;
+ recentSales.innerHTML=db.sales.slice(0,5).map(s=>`<tr><td>${s.invoice}</td><td>${esc(s.customer)}</td><td>${esc(s.items[0]?.name||'')}</td><td>${money(s.total)}</td><td>${money(s.paid)}</td><td>${money(s.balance)}</td></tr>`).join('')||`<tr><td colspan="6" class="empty">No sales yet</td></tr>`;
+ purchasesBody.innerHTML=db.purchases.map(x=>`<tr><td>${x.no}</td><td>${esc(x.supplier)}</td><td>${x.date}</td><td>${esc(x.product)}</td><td>${x.qty}</td><td>${money(x.total)}</td><td>${money(x.paid)}</td><td>${money(x.balance)}</td></tr>`).join('')||`<tr><td colspan="8" class="empty">No purchases yet</td></tr>`;
+ customersBody.innerHTML=db.customers.map(c=>{let ss=db.sales.filter(s=>s.customerId===c.id),tot=ss.reduce((a,s)=>a+s.total,0),bal=ss.reduce((a,s)=>a+s.balance,0);return `<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.type)}</td><td>${esc(c.mobile||'')}</td><td>${money(tot)}</td><td class="${bal?'danger':''}">${money(bal)}</td><td>${c.credit?money(c.limit):'—'}</td></tr>`}).join('');
+ suppliersBody.innerHTML=db.suppliers.map(s=>{let ps=db.purchases.filter(p=>p.supplier===s.name);return `<tr><td>${esc(s.name)}</td><td>${esc(s.mobile||'')}</td><td>${money(ps.reduce((a,x)=>a+x.total,0))}</td><td>${money(ps.reduce((a,x)=>a+x.balance,0))}</td></tr>`}).join('');
+ paymentsBody.innerHTML=db.payments.map(x=>`<tr><td>${x.date}</td><td>${x.type}</td><td>${esc(x.party)}</td><td>${x.mode}</td><td>${esc(x.ref||'')}</td><td>${money(x.amount)}</td></tr>`).join('')||`<tr><td colspan="6" class="empty">No payments yet</td></tr>`;
+ expensesBody.innerHTML=db.expenses.map(x=>`<tr><td>${x.date}</td><td>${esc(x.cat)}</td><td>${esc(x.desc||'')}</td><td>${x.mode}</td><td>${money(x.amount)}</td></tr>`).join('')||`<tr><td colspan="5" class="empty">No expenses yet</td></tr>`;
+ let cats=[...new Set(db.products.map(p=>p.cat))];prodCat.innerHTML='<option value="">All Categories</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join('');
+}
+function openAdjustmentFor(id){openAdjustment();setTimeout(()=>{if(document.getElementById('ap'))document.getElementById('ap').value=id},50)}
+function globalSearch(q){if(q.length<2)return;let p=db.products.find(p=>(p.name+' '+p.sku+' '+p.brand).toLowerCase().includes(q.toLowerCase()));if(p){show('products');prodSearch.value=q;renderProducts()}}
+renderAll();
+</script>
+</body></html>
